@@ -140,10 +140,10 @@ export const CartScreen: React.FC = () => {
             </ScrollView>)}
             <Footer>
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <Text>Estimated Total</Text>
+                    <Text style={{fontWeight: 'bold'}} >Estimated Total</Text>
                     <Text>${total}</Text>
                 </View>
-                <View style={{flex: 2,flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
+                <View style={{flex: 2,flexDirection: 'row',justifyContent: 'space-between', marginBottom: 10}}>
                     <Pressable style={({pressed}) => [
                         {
                             ...style.button,

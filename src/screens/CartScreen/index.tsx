@@ -1,7 +1,7 @@
 import {Image, Pressable, ScrollView, Text, View} from "react-native";
 import {Footer} from "../../components/Footer";
-import {style} from "../ProductDetail/style.ts";
-import React from "react";
+import {style} from "./style.ts";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppState, CartItem} from "../../state/types.ts";
 import {setCart, setCartCount} from "../../state/action.ts";
@@ -9,10 +9,19 @@ import {Card} from "../../components/Card";
 
 export const CartScreen: React.FC = () => {
     const cartItems = useSelector((state: AppState) => state.cart)
+    const [total, setTotal] = useState(0);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        calculateTotal(cartItems);
+    }, []);
     const checkOut = () => {
 
     }
+
+    useEffect(() => {
+        console.log('Total Updated: ', total);
+    }, [total]);
 
     const updateCount = (updatedCartItems: CartItem[]) => {
         let cartCount = 0;
@@ -28,6 +37,7 @@ export const CartScreen: React.FC = () => {
             }
             return ct;
         });
+        calculateTotal(updatedCartItems);
         dispatch(setCart(updatedCartItems));
         updateCount(updatedCartItems);
     }
@@ -38,12 +48,14 @@ export const CartScreen: React.FC = () => {
             }
             return ct;
         });
+        calculateTotal(updatedCartItems);
         dispatch(setCart(updatedCartItems));
         updateCount(updatedCartItems);
     };
 
     const handleRemove = (item: CartItem) => {
         const updatedCartItems = cartItems.filter((ct) => ct.id !== item.id);
+        calculateTotal(updatedCartItems);
         dispatch(setCart(updatedCartItems));
         updateCount(updatedCartItems);
     }
@@ -57,6 +69,11 @@ export const CartScreen: React.FC = () => {
             </View>
 
         )
+    }
+    const calculateTotal = (cartItems: CartItem[]) => {
+        let tempTotal = 0;
+        cartItems.map((ct) => tempTotal += (ct.price * ct.quantity));
+        setTotal(Math.round((tempTotal + Number.EPSILON) * 100) / 100);
     }
     const cartListView = () => {
         if (cartItems) {
@@ -118,18 +135,24 @@ export const CartScreen: React.FC = () => {
     return (
         <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'white'}}>
             {cartItems.length === 0 && emptyView()}
-            {cartItems.length > 0 && (<ScrollView style={{flex: 1}}>
+            {cartItems.length > 0 && (<ScrollView style={{flex: 1, marginBottom: 100}}>
                 {cartListView()}
             </ScrollView>)}
             <Footer>
-                <Pressable style={({pressed}) => [
-                    {
-                        ...style.button,
-                        backgroundColor: pressed ? 'rgba(0, 0, 0, 0.1)' : "#28ABE2",
-                    },
-                ]} onPress={() => checkOut()}>
-                    <Text style={{...style.buttonText}}>Checkout</Text>
-                </Pressable>
+                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <Text>Estimated Total</Text>
+                    <Text>${total}</Text>
+                </View>
+                <View style={{flex: 2,flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
+                    <Pressable style={({pressed}) => [
+                        {
+                            ...style.button,
+                            backgroundColor: pressed ? 'rgba(0, 0, 0, 0.1)' : "#28ABE2",
+                        },
+                    ]} onPress={() => checkOut()}>
+                        <Text style={{...style.buttonText}}>Checkout</Text>
+                    </Pressable>
+                </View>
             </Footer>
         </View>
     )

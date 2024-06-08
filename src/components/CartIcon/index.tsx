@@ -15,7 +15,6 @@ export const CartIcon: React.FC<Props> = ({action}) => {
 
     return (
         <TouchableOpacity onPress={action}>
-
             <View style={{position: 'relative', left: 18, top: 10, elevation: 2}}>
                 <DotWithNumber value={"" + cartCount}/>
             </View>

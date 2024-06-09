@@ -1,27 +1,33 @@
-import {Image, Platform, Pressable, Text, TextInput, View} from "react-native";
+import {Image, Pressable, Text, TextInput, View} from "react-native";
 import {styles} from "./style.ts";
 import React, {useEffect, useState} from "react";
-import {SetUser} from "../../state/action.ts";
 import {Screens} from "../../type.ts";
-import {useLogin} from "../../hooks/serviceHooks.ts";
+import {useLogin} from "../../hooks";
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
+import {ParamListBase} from "@react-navigation/native";
 
+export interface Props {
+    navigation: NativeStackNavigationProp<ParamListBase>;
+}
 // @ts-ignore
-export const LoginScreen: React.FC = ({navigation}) => {
+export const LoginScreen: React.FC = (props: Props) => {
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('');
     const [triggerLogin, setTriggerLogin] = useState(0);
     const loginHook = useLogin(triggerLogin, userName, password);
     const handleSignIn = () => {
+
         if (userName && userName.length > 4 && password && password.length > 4) {
+            console.log("Login Creds: ", userName, password);
             setTriggerLogin(Date.now());
         }
     }
 
     useEffect(() => {
-            if (loginHook.result) {
+            if (loginHook && loginHook.result) {
                 console.log("Login Response: ", loginHook.result)
-                navigation.navigate(Screens.HOME);
-            } else (loginHook.error)
+                props.navigation.navigate(Screens.HOME);
+            } else if (loginHook.error)
             {
                 console.log(loginHook.error)
             }

@@ -15,8 +15,8 @@ import {useEffect, useState} from "react";
 //     )
 // })
 export const useLogin = (trigger: number, userName: string, password: string) => {
-    const [result, setResult] = useState<any>({});
-    const [error, setError] = useState<any>({});
+    const [result, setResult] = useState<any>(null);
+    const [error, setError] = useState<any>(null);
 
     const login = async () => {
         const response = await fetch('https://fakestoreapi.com/auth/login', {
@@ -37,7 +37,12 @@ export const useLogin = (trigger: number, userName: string, password: string) =>
             const res = await response.json();
             setResult(res);
         } else {
-            setError(new Error(JSON.stringify(response)));
+            try  {
+                setError(new Error(JSON.stringify(response)));
+            }catch (err){
+
+            }
+
         }
 
     }

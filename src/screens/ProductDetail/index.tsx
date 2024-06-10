@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Image, Pressable, ScrollView, Text, View} from "react-native";
-import {useGetProduct} from "../../hooks/serviceHooks.ts";
+import {useGetProduct} from "../../hooks";
 import {useDispatch, useSelector} from "react-redux";
 import {AppState, CartItem} from "../../state/types.ts";
-import {setCart, setCartCount, setProductId} from "../../state/action.ts";
+import {setCart, setCartCount} from "../../state/action.ts";
 import {style} from "./style.ts";
 import {Footer} from "../../components/Footer";
 

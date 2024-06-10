@@ -1,3 +1,5 @@
 export {
-    useLogin
+    useLogin,
+    useGetProduct,
+    useGetAllProducts
 } from './serviceHooks.ts'

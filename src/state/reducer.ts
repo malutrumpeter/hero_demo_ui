@@ -6,6 +6,7 @@ const initialState = {
     productId: 0,
     cartCount: 0,
     cart: [],
+    productsInCart: [],
 }
 
 interface Action {

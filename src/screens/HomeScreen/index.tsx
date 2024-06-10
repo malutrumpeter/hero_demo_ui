@@ -1,15 +1,18 @@
 import {Image, Pressable, ScrollView, Text, View} from "react-native";
 import React, {useEffect, useState} from "react";
-import {useGetAllProducts} from "../../hooks/serviceHooks.ts";
+import {useGetAllProducts} from "../../hooks";
 import {Card} from "../../components/Card";
 import {Screens} from "../../type.ts";
 import {useDispatch} from "react-redux";
 import { setProductId} from "../../state/action.ts";
-import Icon from 'react-native-vector-icons/EvilIcons';
+import {NativeStackNavigationProp} from "@react-navigation/native-stack";
+import {ParamListBase} from "@react-navigation/native";
 
+export interface Props {
+    navigation: NativeStackNavigationProp<ParamListBase>;
+}
 // @ts-ignore
-export const HomeScreen: React.FC = ({navigation}) => {
-    // const [tiggerProducts, setTriggerProducts] = useState(0);
+export const HomeScreen: React.FC = (props: Props) => {
     const [products, setProducts] = useState<any[]>([]);
     const productsHook = useGetAllProducts();
     const dispatch = useDispatch();
@@ -27,7 +30,7 @@ export const HomeScreen: React.FC = ({navigation}) => {
 
     const handleProductSelection = (id: number) => {
         dispatch(setProductId(id));
-        navigation.navigate(Screens.PRODUCT_DETAIL)
+        props.navigation.navigate(Screens.PRODUCT_DETAIL)
     }
 
     const card = () => {

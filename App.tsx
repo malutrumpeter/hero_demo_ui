@@ -11,7 +11,6 @@ import {LoginScreen} from "./src/screens/LoginScreen";
 import {HomeScreen} from "./src/screens/HomeScreen";
 import {Screens} from "./src/type.ts";
 import {ProductDetail} from "./src/screens/ProductDetail";
-import Icon from "react-native-vector-icons/EvilIcons";
 import {CartIcon} from "./src/components/CartIcon";
 import {CartScreen} from "./src/screens/CartScreen";
 

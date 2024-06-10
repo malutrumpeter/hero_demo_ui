@@ -6,18 +6,31 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppState, CartItem} from "../../state/types.ts";
 import {setCart, setCartCount} from "../../state/action.ts";
 import {Card} from "../../components/Card";
+import {SnackBar} from "../../components/SnackBar";
 
 export const CartScreen: React.FC = () => {
     const cartItems = useSelector((state: AppState) => state.cart)
     const [total, setTotal] = useState(0);
+    const [showSnackBar, setShowSnackBar] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
         calculateTotal(cartItems);
     }, []);
     const checkOut = () => {
-
+        setShowSnackBar(true);
     }
+
+    useEffect(() => {
+        if (showSnackBar) {
+            const timer = setTimeout(()=>{
+                setShowSnackBar(false);
+            }, 2000);
+
+            return () => clearTimeout(timer);
+        }
+
+    }, [showSnackBar]);
 
     useEffect(() => {
         console.log('Total Updated: ', total);
@@ -132,8 +145,10 @@ export const CartScreen: React.FC = () => {
         }
 
     }
+
     return (
         <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'white'}}>
+            {showSnackBar   && <SnackBar message={'Success!'} /> }
             {cartItems.length === 0 && emptyView()}
             {cartItems.length > 0 && (<ScrollView style={{flex: 1, marginBottom: 100}}>
                 {cartListView()}

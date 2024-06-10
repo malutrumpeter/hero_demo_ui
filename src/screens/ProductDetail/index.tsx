@@ -76,16 +76,15 @@ export const ProductDetail: React.FC = () => {
                     </View>
 
                 </ScrollView>
-                <Pressable style={({pressed}) => [
-                    {
-                        ...style.button,
-                        backgroundColor: pressed ? 'rgba(0, 0, 0, 0.1)' : "#28ABE2",
-                    },
-                ]} onPress={() => addToCart()}>
-                    <Text testID={'add-to-cart'} style={{...style.buttonText}}>Add To Cart</Text>
-                </Pressable>
                 <Footer>
-
+                    <Pressable style={({pressed}) => [
+                        {
+                            ...style.button,
+                            backgroundColor: pressed ? 'rgba(0, 0, 0, 0.1)' : "#28ABE2",
+                        },
+                    ]} onPress={() => addToCart()}>
+                        <Text testID={'add-to-cart'} style={{...style.buttonText}}>Add To Cart</Text>
+                    </Pressable>
                 </Footer>
             </View>)
         } else {

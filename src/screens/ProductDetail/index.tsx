@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Image, Pressable, ScrollView, Text, View} from "react-native";
 import {useGetProduct} from "../../hooks";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from 'react-redux';
 import {AppState, CartItem} from "../../state/types.ts";
 import {setCart, setCartCount} from "../../state/action.ts";
 import {style} from "./style.ts";
@@ -58,7 +58,7 @@ export const ProductDetail: React.FC = () => {
                         <Text>{product.description}</Text>
                     </View>
                     <View style={{flex: 5, alignSelf: 'center'}}>
-                        {product.image && (<Image source={{uri: product.image}}
+                        {product.image && (<Image testID={'product-image'} source={{uri: product.image}}
                                                   style={{
                                                       width: 150,
                                                       height: 200,
@@ -76,15 +76,16 @@ export const ProductDetail: React.FC = () => {
                     </View>
 
                 </ScrollView>
+                <Pressable style={({pressed}) => [
+                    {
+                        ...style.button,
+                        backgroundColor: pressed ? 'rgba(0, 0, 0, 0.1)' : "#28ABE2",
+                    },
+                ]} onPress={() => addToCart()}>
+                    <Text testID={'add-to-cart'} style={{...style.buttonText}}>Add To Cart</Text>
+                </Pressable>
                 <Footer>
-                    <Pressable style={({pressed}) => [
-                        {
-                            ...style.button,
-                            backgroundColor: pressed ? 'rgba(0, 0, 0, 0.1)' : "#28ABE2",
-                        },
-                    ]} onPress={() => addToCart()}>
-                        <Text style={{...style.buttonText}}>Add To Cart</Text>
-                    </Pressable>
+
                 </Footer>
             </View>)
         } else {

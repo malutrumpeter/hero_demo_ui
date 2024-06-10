@@ -3,7 +3,6 @@ import {fireEvent, render} from '@testing-library/react-native';
 import {ProductDetail} from '../../../src/screens/ProductDetail';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppState} from '../../../src/state/types.ts';
-import {SetCart} from "../../../src/state/action.ts";
 
 const mockUseSelector = useSelector as unknown as jest.Mock;
 
